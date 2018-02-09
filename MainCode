@@ -1,0 +1,85 @@
+Imports System.IO
+
+Public Class Form1
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ClearAllBoxes()
+        FillTeams()
+
+    End Sub
+    Sub FillTeams()
+
+        Dim Teams(3) As String ' array initalise 
+
+        Teams(0) = "Tesla"
+        Teams(1) = "Apple"
+        Teams(2) = "Google"
+        Teams(3) = "Alphabet"
+
+
+        For i = 0 To UBound(Teams) 'to maximum bits of data in teams
+            CmbTeamPlayer.Items.Add(Teams(i))
+
+        Next
+
+    End Sub
+    Sub ClearAllBoxes() 'clears all boxes
+        TxtPlayerName.Clear()
+        TxtAttackPlayer.Clear()
+        TxtDefencePlayer.Clear()
+        CmbTeamPlayer.Text = ""
+
+    End Sub
+
+    Sub PlayerBoxFillCheck() ' checks each box for text then runs save to CSV
+
+        If TxtPlayerName.Text = "" Then
+            MsgBox("Please Fill all boxes")
+        ElseIf TxtAttackPlayer.Text = "" Then
+            MsgBox("Please Fill all boxes")
+        ElseIf TxtDefencePlayer.Text = "" Then
+            MsgBox("Please Fill all boxes")
+        ElseIf CmbTeamPlayer.Text = "" Then
+            MsgBox("Please Fill all boxes")
+            'go to save CSV in submit sub
+
+
+        End If
+    End Sub
+
+    Private Sub BtnSubmit_Click(sender As Object, e As EventArgs) Handles BtnSubmit.Click
+        'submit button prosecure
+        PlayerBoxFillCheck()
+        SaveToCSV()
+    End Sub
+
+    Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
+        End ' ends program apon cancel
+
+    End Sub
+    Public Sub SaveToCSV()
+        'Dim Fs As FileStream ' creates filestream
+        ' Dim Sw As StreamWriter ' Creates streamwriter
+
+        Dim filename As String = "Players.CSV" ' creates the file with its name set
+
+        ' Fs = New FileStream(filename, FileMode.OpenOrCreate) 'creates a connection to the file
+
+        Dim sw = New StreamWriter(filename, True) 'connects the writer to the file we want
+
+        sw.WriteLine()
+        sw.Write(TxtPlayerName.Text) ' writes all data from form to SW which goes to FW
+        sw.Write(",")
+        sw.Write(TxtAttackPlayer.Text)
+        sw.Write(",")
+        sw.Write(TxtDefencePlayer.Text)
+        sw.Write(",")
+        sw.Write(CmbTeamPlayer.Text)
+        sw.Write(",")
+
+
+        sw.Close()
+        MsgBox("YAY")
+        ClearAllBoxes()
+
+    End Sub
+End Class
